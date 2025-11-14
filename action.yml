@@ -72,6 +72,8 @@ runs:
       name: Run pa11y-ci
       shell: bash
       run: |
+        npx puppeteer browsers install chrome
+
         npx pa11y-ci@4.0.1 \
           --config ".pa11yci.generated.json" \
           --json \

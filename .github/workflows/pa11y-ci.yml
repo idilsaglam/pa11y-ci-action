@@ -1,0 +1,34 @@
+name: Accessibility – pa11y-ci
+
+on:
+  push:
+    branches: [ master ]  # your repo is on master
+  pull_request:
+
+jobs:
+  pa11y-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run pa11y-ci
+        run: npm run pa11y-ci
+
+      - name: Upload pa11y report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pa11y-report
+          path: pa11y-report.json
+          if-no-files-found: ignore

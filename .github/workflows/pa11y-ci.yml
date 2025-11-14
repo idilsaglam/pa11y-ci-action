@@ -15,7 +15,7 @@ jobs:
 
       - name: Run pa11y-ci via reusable action
         id: pa11y
-        uses: ./
+        uses: idilsaglam/pa11y-ci-action@v1.0.0
         with:
           config: .pa11yci.json
           output: pa11y-report.json

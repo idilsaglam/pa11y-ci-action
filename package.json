@@ -1,12 +1,9 @@
 {
-  "name": "actions",
+  "name": "pa11y-ci-action",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pa11y-ci": "pa11y-ci --config .pa11yci.json --json --reporter json > pa11y-report.json"
-  },
+  "main": "src/index.js",
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idilsaglam/pa11y-ci-action.git"
@@ -19,7 +16,7 @@
     "url": "https://github.com/idilsaglam/pa11y-ci-action/issues"
   },
   "homepage": "https://github.com/idilsaglam/pa11y-ci-action#readme",
-  "devDependencies": {
-    "pa11y-ci": "^4.0.1"
+  "dependencies": {
+    "@actions/core": "^1.11.1"
   }
 }

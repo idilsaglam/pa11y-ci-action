@@ -10,73 +10,11 @@ inputs:
     description: "Path where the JSON report will be written."
     required: false
     default: "pa11y-report.json"
-  node-version:
-    description: "Node.js version to use."
-    required: false
-    default: "24"
 
 outputs:
   report-path:
     description: "Path of the generated JSON report."
-    value: ${{ steps.run-pa11y.outputs.report-path }}
 
 runs:
-  using: "composite"
-  steps:
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version }}
-
-    - name: Generate pa11y-ci config from URLs
-      id: generate-config
-      shell: bash
-      env:
-        URLS_INPUT: ${{ inputs.urls }}
-      run: |
-        node <<'NODE'
-        const fs = require('fs');
-
-        const urlsInput = process.env.URLS_INPUT || '';
-        const urls = urlsInput
-          .split('\n')
-          .map(u => u.trim())
-          .filter(Boolean);
-
-        if (urls.length === 0) {
-          throw new Error('No URLs provided in "urls" input.');
-        }
-
-        const config = {
-          urls,
-          defaults: {
-            standard: 'WCAG2AA',
-            wait: 1000,
-            timeout: 30000,
-            chromeLaunchConfig: {
-              args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-              ],
-            },
-          },
-        };
-
-        fs.writeFileSync('.pa11yci.generated.json', JSON.stringify(config, null, 2));
-        console.log('Generated .pa11yci.generated.json:');
-        console.log(JSON.stringify(config, null, 2));
-        NODE
-
-    - id: run-pa11y
-      name: Run pa11y-ci
-      shell: bash
-      run: |
-        npx puppeteer browsers install chrome
-
-        npx pa11y-ci@4.0.1 \
-          --config ".pa11yci.generated.json" \
-          --json \
-          --reporter json > "${{ inputs.output }}"
-
-        echo "report-path=${{ inputs.output }}" >> "$GITHUB_OUTPUT"
+  using: "node20"
+  main: "src/index.js"

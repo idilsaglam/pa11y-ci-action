@@ -28,5 +28,5 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: pa11y-report
-          path: ${{ steps.pa11y.outputs.report-path }}
+          path: pa11y-report.json
           if-no-files-found: ignore

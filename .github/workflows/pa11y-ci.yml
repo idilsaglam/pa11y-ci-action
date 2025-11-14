@@ -2,7 +2,7 @@ name: Accessibility - pa11y-ci
 
 on:
   push:
-    branches: [ master ]  
+    branches: [ master ]
   pull_request:
 
 jobs:
@@ -13,22 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Run pa11y-ci via reusable action
+        id: pa11y
+        uses: ./
         with:
+          config: .pa11yci.json
+          output: pa11y-report.json
           node-version: 24
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run pa11y-ci
-        run: npm run pa11y-ci
+          install-command: npm ci
 
       - name: Upload pa11y report
         if: always()
         uses: actions/upload-artifact@v5
         with:
           name: pa11y-report
-          path: pa11y-report.json
+          path: ${{ steps.pa11y.outputs.report-path }}
           if-no-files-found: ignore

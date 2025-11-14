@@ -1,0 +1,46 @@
+name: "pa11y-ci runner"
+description: "Run pa11y-ci with a config file and output a JSON report."
+author: "Idil Saglam"
+
+inputs:
+  config:
+    description: "Path to pa11y-ci config file"
+    required: false
+    default: ".pa11yci.json"
+  output:
+    description: "Path where the JSON report will be written"
+    required: false
+    default: "pa11y-report.json"
+  node-version:
+    description: "Node.js version to use"
+    required: false
+    default: "22"
+  install-command:
+    description: "Command to install dependencies"
+    required: false
+    default: "npm ci"
+
+outputs:
+  report-path:
+    description: "Path of the generated JSON report"
+    value: ${{ steps.run-pa11y.outputs.report-path }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: npm
+
+    - name: Install dependencies
+      run: ${{ inputs.install-command }}
+      shell: bash
+
+    - id: run-pa11y
+      name: Run pa11y-ci
+      shell: bash
+      run: |
+        npx pa11y-ci --config "${{ inputs.config }}" --json --reporter json > "${{ inputs.output }}"
+        echo "report-path=${{ inputs.output }}" >> "$GITHUB_OUTPUT"

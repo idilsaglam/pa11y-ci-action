@@ -9,16 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/idilsaglam/actions.git"
+    "url": "git+https://github.com/idilsaglam/pa11y-ci-action.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/idilsaglam/actions/issues"
+    "url": "https://github.com/idilsaglam/pa11y-ci-action/issues"
   },
-  "homepage": "https://github.com/idilsaglam/actions#readme",
+  "homepage": "https://github.com/idilsaglam/pa11y-ci-action#readme",
   "devDependencies": {
     "pa11y-ci": "^4.0.1"
   }

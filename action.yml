@@ -1,5 +1,5 @@
-name: "pa11y-ci runner"
-description: "Run pa11y-ci with a config file and output a JSON report."
+name: "Pa11y CI Accessibility Audit"
+description: "Run pa11y-ci accessibility checks on one or more URLs and generate a JSON report."
 author: "Idil Saglam"
 
 inputs:
@@ -14,7 +14,7 @@ inputs:
   node-version:
     description: "Node.js version to use"
     required: false
-    default: "22"
+    default: "24"
   install-command:
     description: "Command to install dependencies"
     required: false

@@ -13,14 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run pa11y-ci via reusable action
+      - name: Run pa11y-ci via reusable action (local)
         id: pa11y
-        uses: idilsaglam/pa11y-ci-action@v1.0.0
+        uses: ./
         with:
-          config: .pa11yci.json
+          urls: |
+            https://example.com/
+            https://example.com/about
           output: pa11y-report.json
-          node-version: 24
-          install-command: npm ci
+          # node-version: 24  # optional
 
       - name: Upload pa11y report
         if: always()

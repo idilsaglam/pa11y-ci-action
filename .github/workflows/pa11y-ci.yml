@@ -1,8 +1,8 @@
-name: Accessibility – pa11y-ci
+name: Accessibility - pa11y-ci
 
 on:
   push:
-    branches: [ master ]  # your repo is on master
+    branches: [ master ]  
   pull_request:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -27,7 +27,7 @@ jobs:
 
       - name: Upload pa11y report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: pa11y-report
           path: pa11y-report.json
